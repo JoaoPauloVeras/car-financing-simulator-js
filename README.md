@@ -59,4 +59,4 @@ Last Installment: $ 951.56
 Year 1 Property Tax (IPVA): $ 1800.00
 CONGRATULATIONS: The financing fits your budget.
 
-Team: João Arthur de Oliveira Taumaturgo Santiago and João Paulo de Carvalho Veras[cite: 1]
+Team: João Arthur de Oliveira Taumaturgo Santiago and João Paulo de Carvalho Veras
