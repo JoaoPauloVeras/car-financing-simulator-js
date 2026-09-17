@@ -1,0 +1,65 @@
+# Car Financing Simulator (SAC System)
+
+  
+**Team:** João Paulo de Carvalho Veras and João Arthur de Oliveira Taumaturgo Santiago 
+**Topic:** Financial and tax calculation automation for vehicle acquisition  
+
+---
+
+## Objective
+To develop a program that helps users make informed decisions when purchasing a car. The tool simulates the real cost of financing using the Constant Amortization System (SAC - *Sistema de Amortização Constante*), forecasts mandatory future expenses such as property tax (IPVA) based on the purchase state, and provides a financial health diagnostic based on the vehicle's value.
+
+---
+
+## Problem Statement
+Car buyers often focus solely on the initial monthly installment, neglecting other mandatory recurring costs (e.g., vehicle property tax - IPVA). Additionally, IPVA rates vary drastically across states. Buyers need a reliable way to evaluate whether the purchase compromises their financial health and determine whether the financing is worth it.
+
+---
+
+## Key Features
+* Calculate IPVA taxes based on the purchase state.
+* Generate a projected IPVA cost history for the entire financing term.
+* Calculate financing installments using the SAC system.
+* Analyze the overall financial scenario and assess affordability relative to the user's income.
+* Display a comprehensive diagnostic report in the final output.
+
+---
+
+## Planned Logical Structure
+The codebase is structured around six core functions:
+
+1. `iniciarSimulacao` (Start Simulation): Validates input conditions—ensuring the down payment is at least 20% of the vehicle's total price and the installment period is between 12 and 60 months. If either condition is violated, a warning message is displayed.
+2. `calcularIpva` (Calculate IPVA): Computes the IPVA based on the selected state. For São Paulo (SP), Rio de Janeiro (RJ), or Minas Gerais (MG), the rate is set at 4%. For all other states, the rate is 3%.
+3. `gerarHistoricoIpva` (Generate IPVA History): Forecasts annual IPVA costs over the financing term. It calculates the term length in years and computes the Year 1 tax. For subsequent years, it applies a 10% annual vehicle depreciation rate to recalculate the reduced IPVA value.
+4. `calcularFinanciamentoSac` (Calculate SAC Financing): Calculates monthly installments using the SAC method. Interest is computed on the remaining principal balance, added to the fixed amortization rate, to determine each month's installment. As the principal decreases over time, the interest and total monthly payment progressively decrease.
+5. `calcularTempoSuficienteParaCompra` (Calculate Time to Buy Outright): Determines how long it would take the user to buy the car in cash if they saved money instead of financing. It simulates a savings account accumulating monthly deposits with a 0.5% monthly compound interest yield until the total vehicle price is reached.
+6. `exibirRelatorio` (Display Final Report): The main execution function. It calls `iniciarSimulacao` to check eligibility, triggers the SAC financing and IPVA projections, and checks if the first installment exceeds 30% of the user's monthly income:
+   * **If > 30%:** Flags the purchase as financially risky and triggers `calcularTempoSuficienteParaCompra` to report how many months are needed to buy in cash.
+   * **If ≤ 30%:** Confirms the financing is safe for the user's financial health and prints the full financial summary to the console.
+
+---
+
+## Expected Inputs
+* **(Number)** Total vehicle list price
+* **(Number)** Down payment amount paid upfront
+* **(Number)** Total financing period (in months)
+* **(Number)** User's net monthly income
+* **(String)** Two-letter state abbreviation (UF, e.g., "SP", "MG", "RJ")
+* **(Number)** Monthly interest rate (%)
+
+---
+
+## Expected Outputs
+
+### Error Scenarios
+* `"Insufficient down payment"` or `"Invalid number of installments"`
+
+### Financing Metrics
+* Down payment amount and selected state abbreviation (UF)
+* Exact amount (in local currency) of the **1st installment**
+* Exact amount (in local currency) of the **last installment**
+* Year 1 IPVA tax amount
+
+### Feasibility Diagnostic
+* **Success:** `"CONGRATULATIONS: The financing fits your budget."`
+* **Risky:** `"Better save up! You could buy the car outright in X months."`
